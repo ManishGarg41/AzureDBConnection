@@ -36,5 +36,13 @@ namespace AzureDBConnection.Controllers
 
             return Ok(data);
         }
+        [Route("employeeDetails")]
+        [HttpPost]
+        public IActionResult GetEmployeeDetails(Movie movie)
+        {
+            var data = _employeeContext.Movies.FirstOrDefault(x=>x.ID==1);
+
+            return Ok(data);
+        }
     }
 }
