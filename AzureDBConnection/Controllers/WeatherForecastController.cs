@@ -40,5 +40,21 @@ namespace AzureDBConnection.Controllers
             })
             .ToArray();
         }
+
+
+        [HttpGet("GetAdvanceDetails")]
+        public IEnumerable<WeatherForecast> GetAdvanceDetails()
+        {
+            var rng = new Random();
+            var data = _configuration.GetValue<string>("weather:url");
+            int count = _configuration.GetValue<int>("weather:count");
+            return Enumerable.Range(1, count).Select(index => new WeatherForecast
+            {
+                Date = DateTime.Now.AddDays(index),
+                TemperatureC = rng.Next(-20, 55),
+                Summary = Summaries[rng.Next(Summaries.Length)]
+            })
+            .ToArray();
+        }
     }
 }
