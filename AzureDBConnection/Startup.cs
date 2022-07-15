@@ -33,6 +33,7 @@ namespace AzureDBConnection
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Swagger", Version = "v1" });
             });
+            services.AddAzureAppConfiguration();
             services.AddDbContext<EmployeeContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("MvcCoreMovieContext")));
 
@@ -45,7 +46,7 @@ namespace AzureDBConnection
            
 
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "Swagger v1");
-            c.RoutePrefix = string.Empty;
+            //c.RoutePrefix = string.Empty;
             
             });
 
@@ -54,7 +55,7 @@ namespace AzureDBConnection
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseAzureAppConfiguration();
             app.UseRouting();
 
             app.UseAuthorization();

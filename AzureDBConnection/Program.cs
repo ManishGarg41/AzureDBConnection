@@ -20,7 +20,18 @@ namespace AzureDBConnection
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.ConfigureAppConfiguration(config=> {
+                        var connetionString = config.Build().GetConnectionString("appConfiguration");
+                        //config.AddAzureAppConfiguration(connetionString);
+                        config.AddAzureAppConfiguration(options=> {
+                            options.Connect(connetionString);
+                            options.ConfigureRefresh(refresh=> {
+                                refresh.Register("refreshAll", refreshAll:true).SetCacheExpiration(TimeSpan.FromSeconds(5));
+                            });
+                        });
+                    });
                     webBuilder.UseStartup<Startup>();
                 });
+
     }
 }
